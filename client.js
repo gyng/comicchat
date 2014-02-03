@@ -5,7 +5,7 @@
   var content = document.getElementById('content');
   var input   = document.getElementById('input');
   var status  = document.getElementById('status');
-  var serverAddress = 'ws://127.0.0.1:8084';
+  var serverAddress = 'ws://hidoi.moebros.org:8084';
 
   if (typeof (window.WebSocket || window.MozWebSocket) === 'undefined') {
     content.innerHTML = 'Websocket support required.';
