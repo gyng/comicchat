@@ -1,4 +1,4 @@
-`<font style="ms comic sans">`
+`<font face="ms comic sans">`
 
 # comicchat
 
