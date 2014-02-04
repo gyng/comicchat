@@ -8,6 +8,10 @@
   var status    = document.getElementById('status');
   var notify    = document.getElementById('notify');
   var serverAddress = 'ws://hidoi.moebros.org:8084';
+  input.value = ''; // Clear on init
+  var currentBoxActors = 0;
+  var currentBoxes = 0;
+  var previousAuthor = null;
 
   if (typeof (window.WebSocket || window.MozWebSocket) === 'undefined') {
     content.innerHTML = 'Websocket support required.';
@@ -18,12 +22,6 @@
   if (typeof notification !== 'undefined' && notification.permission !== 'denied') {
     notification.requestPermission();
   }
-
-  // Clear on init
-  input.value = '';
-  var currentBoxActors = 0;
-  var currentBoxes = 0;
-  var previousAuthor = null;
 
   var connection = new WebSocket(serverAddress);
 
@@ -56,6 +54,8 @@
     }
   };
 
+  // User Interface
+
   inputForm.onsubmit = function (e) {
     connection.send(input.value);
     input.placeholder = 'Chat...';
@@ -64,6 +64,42 @@
   };
 
   function addLine (message) {
+    var maxActorsPerBox = 2;
+
+    // Make a new box if
+    // * We hit maximum number of actors in a box
+    // * No boxes
+    // * It's a monologue
+    var newBox =
+      currentBoxActors >= maxActorsPerBox ||
+      currentBoxes === 0 ||
+      previousAuthor === message.author;
+
+    if (newBox === true) {
+      content.appendChild(makeBox());
+      window.scrollTo(0, document.body.scrollHeight);
+      currentBoxActors = 0;
+      currentBoxes++;
+    }
+
+    var boxes = content.querySelectorAll(".box");
+    var box = boxes[boxes.length - 1];
+    var flip = currentBoxActors >= maxActorsPerBox / 2
+    box.appendChild(makeActor(message, flip));
+    currentBoxActors++;
+    previousAuthor = message.author;
+  };
+
+  function makeBox () {
+    var boxTemplate = document.getElementById('box-template').innerHTML;
+    var box = document.createElement('div');
+    box.innerHTML = boxTemplate;
+
+    return box.getElementsByTagName('div')[0];
+  }
+
+  function makeActor (message, flip) {
+    var actorTemplate = document.getElementById('actor-template').innerHTML;
     var characters = [
       {
         name: 'hugh',
@@ -79,43 +115,14 @@
         images: ['angry', 'bored', 'coy', 'happy', 'laugh', 'neutral', 'sad', 'scared', 'shout']
       }
     ];
-    var boxTemplate   = document.getElementById('box-template').innerHTML;
-    var actorTemplate = document.getElementById('actor-template').innerHTML;
-    var maxActorsPerBox = 2;
 
     var character = characters[message.author.length % characters.length];
     var avatar = document.createElement('img');
     var avatarImageIndex = getHashCode(message.text + ' ' + message.author + ' ' + currentBoxes) % character.images.length;
     avatar.src = './avatars/' + character.name + '/' + character.images[avatarImageIndex] + '.png';
 
-    var actor = document.createElement('div');
-    actor.innerHTML = actorTemplate;
-    actor.querySelector('.text').appendChild(document.createTextNode(message.text));
-    actor.querySelector('.name').appendChild(document.createTextNode(message.author));
-    actor.querySelector('.avatar').appendChild(avatar);
-    actor = actor.getElementsByTagName('div')[0];
-
-    // Make a new box if
-    // * We hit maximum number of actors in a box
-    // * No boxes
-    // * It's a monologue
-    var newBox =
-      currentBoxActors >= maxActorsPerBox ||
-      currentBoxes === 0 ||
-      previousAuthor === message.author;
-
-    if (newBox === true) {
-      // Filled box or no boxes
-      box = document.createElement('div');
-      box.innerHTML = boxTemplate;
-      content.appendChild(box.getElementsByTagName('div')[0]);
-      window.scrollTo(0, document.body.scrollHeight);
-      currentBoxActors = 0;
-      currentBoxes++;
-    }
-
     // Make characters face each other
-    if (currentBoxActors >= maxActorsPerBox / 2) {
+    if (flip === true) {
       if (avatar.classList) {
         avatar.classList.add('flip-horizontal');
       } else {
@@ -123,12 +130,16 @@
       }
     }
 
-    var boxes = content.querySelectorAll(".box");
-    var box = boxes[boxes.length - 1];
-    box.appendChild(actor);
-    currentBoxActors++;
-    previousAuthor = message.author;
-  };
+    var actor = document.createElement('div');
+    actor.innerHTML = actorTemplate;
+    actor.querySelector('.text').appendChild(document.createTextNode(message.text));
+    actor.querySelector('.name').appendChild(document.createTextNode(message.author));
+    actor.querySelector('.avatar').appendChild(avatar);
+
+    return actor.getElementsByTagName('div')[0];
+  }
+
+  // Utility
 
   function getHashCode (string) {
     var hash = 0;
