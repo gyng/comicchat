@@ -32,6 +32,7 @@ UI.prototype = {
   setupNotifications: function () {
     this.notifyEnabled.onclick = this.requestNotificationsPermission.bind(this);
     this.notification = this.notification || (window.Notification || window.webkitNotifications);
+    if (typeof this.notification === 'undefined') this.notifyEnabled.disabled = true;
   },
 
   requestNotificationsPermission: function () {
@@ -41,7 +42,9 @@ UI.prototype = {
   },
 
   notify: function (data) {
-    if (this.notification.permission === 'granted' && this.notifyEnabled.checked === true) {
+    if (typeof this.notification !== 'undefined' &&
+        this.notification.permission === 'granted' &&
+        this.notifyEnabled.checked === true) {
       new Notification('comicchat', {
         lang: 'en-US',
         icon: './res/icon.gif',
@@ -53,7 +56,7 @@ UI.prototype = {
   setupShortcuts: function () {
     this.inputForm.onsubmit = function (e) {
       e.preventDefault();
-      this.connection.send(input.value);
+      this.connection.send(this.input.value);
       this.input.placeholder = 'Chat...';
       this.inputForm.reset();
     }.bind(this);
