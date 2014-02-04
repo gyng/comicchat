@@ -63,6 +63,9 @@
       }, {
         name: 'jordan',
         images: ['angry', 'bored', 'coy', 'happy', 'laugh', 'neutral', 'sad', 'scared', 'shout']
+      }, {
+        name: 'kwensa',
+        images: ['angry', 'bored', 'coy', 'happy', 'laugh', 'neutral', 'sad', 'scared', 'shout']
       }
     ];
     var boxTemplate   = document.getElementById('box-template').innerHTML;
