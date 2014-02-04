@@ -54,23 +54,34 @@
 
   function addLine (message) {
     var characters = [
-      { name: 'hugh', images: 1 },
-      { name: 'lance', images: 1 }
+      {
+        name: 'hugh',
+        images: ['angry', 'bored', 'coy', 'happy', 'laugh', 'neutral', 'sad', 'scared', 'shout']
+      }, {
+        name: 'lance',
+        images: ['0']
+      }, {
+        name: 'jordan',
+        images: ['angry', 'bored', 'coy', 'happy', 'laugh', 'neutral', 'sad', 'scared', 'shout']
+      }
     ];
     var boxTemplate   = document.getElementById('box-template').innerHTML;
     var actorTemplate = document.getElementById('actor-template').innerHTML;
+    var actorsPerBox = 2;
 
     var character = characters[message.author.length % characters.length];
     var avatar = document.createElement('img');
-    avatar.src = './avatars/' + character.name + '/' + character.name + '' + Math.floor(Math.random(character.images)) + '.gif';
+    var avatarImage = character.images[Math.floor(character.images.length * Math.random())];
+    avatar.src = './avatars/' + character.name + '/' + avatarImage + '.png';
 
     var actor = document.createElement('div');
     actor.innerHTML = actorTemplate;
     actor.querySelector('.text').appendChild(document.createTextNode(message.text));
     actor.querySelector('.name').appendChild(document.createTextNode(message.author));
     actor.querySelector('.avatar').appendChild(avatar);
+    actor = actor.getElementsByTagName('div')[0];
 
-    if (currentBoxActors >= 2 || currentBoxes === 0) {
+    if (currentBoxActors >= actorsPerBox || currentBoxes === 0) {
       // Filled box or no boxes
       box = document.createElement('div');
       box.innerHTML = boxTemplate;
@@ -81,9 +92,17 @@
       currentBoxes++;
     }
 
+    if (currentBoxActors > 0) {
+      if (avatar.classList) {
+        avatar.classList.add('flip-horizontal');
+      } else {
+        avatar.className += ' flip-horizontal';
+      }
+    }
+
     var boxes = content.querySelectorAll(".box");
     var box = boxes[boxes.length - 1];
-    box.appendChild(actor.getElementsByTagName('div')[0]);
+    box.appendChild(actor);
     currentBoxActors++;
   };
 })();

@@ -82,6 +82,15 @@ p {
     margin: 1rem;
 }
 
+.avatar {
+    margin: 3rem 0 0 0;
+    max-width: 100%;
+}
+
+.avatar img {
+    max-width: 100%;
+}
+
 .chat-bubble {
     position: relative;
     max-width: 120px;
@@ -124,4 +133,13 @@ p {
 
 .template {
     display: none;
+}
+
+.flip-horizontal {
+    -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
+    -ms-filter: fliph; /*IE*/
+    filter: fliph; /*IE*/
 }
