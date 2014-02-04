@@ -2,17 +2,14 @@
 
 # comicchat
 
-Based off Microsoft Comic Chat.
+Based off Microsoft Comic Chat. Uses node.js and websockets.
 
-__NOT READY FOR ANY SERIOUS USE YET: NO ESCAPING OF HTML INPUT__
-
-![Screenshot](http://i.imgur.com/LFDd3wC.png)
-
-__NOT READY FOR ANY SERIOUS USE YET: NO ESCAPING OF HTML INPUT__
+![Screenshot](http://i.imgur.com/VTuJF3F.png)
 
 ## Use
 0. Clone repo.
 1. `npm install websocket`
+1. `npm install validator`
 2. Change address of server in `client.js`
 3. Change port of server in `server.js`
 4. `node server.js`
