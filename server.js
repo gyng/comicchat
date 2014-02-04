@@ -56,7 +56,8 @@ wsServer.on('request', function (request, response) {
           }
         });
 
-        history.splice(Math.min(historySize - 1, history.length), 1, json);
+        history.push(json);
+        history.slice(-100);
 
         for (var i = 0; i < clients.length; i++) {
           clients[i].sendUTF(json);
