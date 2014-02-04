@@ -10,11 +10,17 @@
   <div id="content"></div>
 
   <div class="input-bar">
-    Notifications <input type="checkbox" id="notify" />
-    <span id="status">Connecting...</span>
+
     <form id="input-form">
       <input type="text" id="input" placeholder="Your nickname" autocomplete="off" autofocus required />
     </form>
+
+    <div class="options">
+      <div id="status" class="status">Connecting...</div>
+
+      <input type="checkbox" name="notify" id="notify" />
+      <label for="notify">Notifications</label>
+    </div>
   </div>
 
   <div id="box-template" class="template">

@@ -24,14 +24,6 @@ p {
     /* flex-wrap: wrap; */
 }
 
-#input {
-    border: 2px inset #ccc;
-    margin-top: 10px;
-    padding: 5px;
-    width: 400px;
-    font-family: 'Comic Sans MS';
-}
-
 .input-bar {
     position: fixed;
     bottom: 0;
@@ -42,14 +34,30 @@ p {
     align-items: center;
     justify-content: center;
     z-index: 10;
-    border-top: 2px outset #FFF;
+    border-top: 0.2rem outset #FFF;
+    padding: 0 1rem;
 }
 
-#status {
-    width: 88px;
-    display: block;
-    float: left;
-    margin-top: 15px;
+.options {
+    display: flex;
+    justify-content: center;
+    flex-grow: 0;
+    margin: 0 2rem 0 0;
+}
+
+.options div {
+    margin: 0 1rem;
+}
+
+#input {
+    border: 2px inset #ccc;
+    padding: 0.5rem;
+    width: calc(100% - 1.6rem);
+    font-family: 'Comic Sans MS';
+}
+
+#input-form {
+    flex-grow: 2;
 }
 
 .box {
@@ -61,25 +69,24 @@ p {
     background-size: 100% 100%;
     margin: 0.5rem;
     outline: solid 3px #000;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
     -ms-interpolation-mode: nearest-neighbor;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
 }
 
 .actor {
     max-width: 100%;
-    height: calc(100% - 2rem);
+    height: calc(100% - 1rem);
     max-height: 100%;
     float: left;
-    margin: 1rem;
+    margin: 0.5rem;
 }
 
 .name {
@@ -98,45 +105,48 @@ p {
 .avatar img {
     max-width: 100%;
 }
-
 .chat-bubble {
     position: relative;
-    max-width: 120px;
-    padding: 10px;
+    max-width: 12rem;
+    max-height: 20rem;
+    padding: 0.7rem;
     background: #FFFFFF;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    border: #000 solid 5px;
-    font-family: 'Comic Sans MS';
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    border-radius: 1rem;
+    border: #000 solid 0.3rem;
     font-weight: bold;
-    font-size: 120%;
+    font-size: 1.2rem;
 }
 
-.chat-bubble:after {
+.chat-bubble:after
+{
     content: '';
     position: absolute;
     border-style: solid;
-    border-width: 15px 15px 0;
+    border-width: 3rem 0.5rem 0;
     border-color: #FFFFFF transparent;
     display: block;
     width: 0;
     z-index: 1;
-    bottom: -15px;
-    left: 33px;
+    margin-left: 0.15rem;
+    bottom: -2rem;
+    left: 50%;
 }
 
-.chat-bubble:before {
+.chat-bubble:before
+{
     content: '';
     position: absolute;
     border-style: solid;
-    border-width: 19px 19px 0;
+    border-width: 3rem 0.8rem 0;
     border-color: #000 transparent;
     display: block;
     width: 0;
     z-index: 0;
-    bottom: -24px;
-    left: 29px;
+    margin-left: -0.08rem;
+    bottom: -3rem;
+    left: 50%;
 }
 
 .template {
