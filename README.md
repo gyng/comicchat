@@ -4,7 +4,7 @@
 
 Based off Microsoft Comic Chat. Uses node.js and websockets.
 
-![Screenshot](http://i.imgur.com/VTuJF3F.png)
+![Screenshot](http://i.imgur.com/J1k7iwn.png)
 
 ## Use
 0. Clone repo.
@@ -15,9 +15,10 @@ Based off Microsoft Comic Chat. Uses node.js and websockets.
 5. Visit `index.html`
 
 ## TODO
-* Extract MS Chat AVL files
-* Proper avatar hashing
-* Styling
+* More characters
+* More algorithm
+* More styling
+* Cleaner code
 * Everything else
 
 `</font>`
