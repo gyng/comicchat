@@ -17,6 +17,7 @@
   input.value = '';
   var currentBoxActors = 0;
   var currentBoxes = 0;
+  var previousAuthor = null;
 
   var connection = new WebSocket(serverAddress);
 
@@ -84,17 +85,17 @@
     actor.querySelector('.avatar').appendChild(avatar);
     actor = actor.getElementsByTagName('div')[0];
 
-    if (currentBoxActors >= actorsPerBox || currentBoxes === 0) {
+    if (currentBoxActors >= actorsPerBox || currentBoxes === 0 || previousAuthor === message.author) {
       // Filled box or no boxes
       box = document.createElement('div');
       box.innerHTML = boxTemplate;
       content.appendChild(box.getElementsByTagName('div')[0]);
-      // document.scrollTop = document.scrollHeight;
       window.scrollTo(0, document.body.scrollHeight);
       currentBoxActors = 0;
       currentBoxes++;
     }
 
+    // Make characters face each other
     if (currentBoxActors > 0) {
       if (avatar.classList) {
         avatar.classList.add('flip-horizontal');
@@ -107,6 +108,7 @@
     var box = boxes[boxes.length - 1];
     box.appendChild(actor);
     currentBoxActors++;
+    previousAuthor = message.author;
   };
 
   function getHashCode (string) {
