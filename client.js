@@ -71,9 +71,7 @@
     actor.querySelector('.name').innerHTML = message.author;
     actor.querySelector('.avatar').appendChild(avatar);
 
-    var newBox = (currentBoxActors >= 2 + ~~(2 * Math.random())) || (currentBoxes === 0);
-
-    if (newBox === true) {
+    if (currentBoxActors >= 2 || currentBoxes === 0) {
       // Filled box or no boxes
       box = document.createElement('div');
       box.innerHTML = boxTemplate;
