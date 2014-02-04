@@ -1,10 +1,11 @@
 (function () {
   'use strict';
 
-  var name    = false;
-  var content = document.getElementById('content');
-  var input   = document.getElementById('input');
-  var status  = document.getElementById('status');
+  var name      = false;
+  var content   = document.getElementById('content');
+  var input     = document.getElementById('input');
+  var inputForm = document.getElementById('input-form');
+  var status    = document.getElementById('status');
   var serverAddress = 'ws://hidoi.moebros.org:8084';
 
   if (typeof (window.WebSocket || window.MozWebSocket) === 'undefined') {
@@ -44,14 +45,12 @@
     }
   };
 
-  input.addEventListener('keypress', function (e) {
-    if (e.keyCode === 13) {
-      connection.send(input.value);
-      input.placeholder = 'Chat...';
-      input.value = '';
-      e.preventDefault();
-    }
-  });
+  inputForm.onsubmit = function (e) {
+    connection.send(input.value);
+    input.placeholder = 'Chat...';
+    inputForm.reset();
+    e.preventDefault();
+  };
 
   function addLine (message) {
     var characters = [
