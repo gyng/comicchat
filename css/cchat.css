@@ -1,48 +1,90 @@
-html {
-    font-family:"Comic Sans MS"; font-size:12px; padding:0px; margin:0px;
-}
-
-p {
-    line-height:18px;
-}
-
-div { width:500px; margin-left:auto; margin-right:auto;}
-
-#content {
-    padding:5px;
-    background:#ddd;
-    border-radius:5px;
-    overflow-y: scroll;
-    border:1px solid #CCC;
-    margin-top:10px;
-    height: 600px;
+html, body {
+    font-family: "Comic Sans MS";
+    font-size: 12px;
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
     width: 100%;
 }
 
+p {
+    line-height: 150%;
+}
+
+#content {
+    padding: 1rem 1rem 6rem 1rem;
+    background: #eee;
+    width: calc(100% - 2rem);
+
+    float: left;  /*Remove when flex-wrapped*/
+
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /* Chrome-only before FF28 lands. Use float: left in .box for now */
+    /* flex-wrap: wrap; */
+}
+
 #input {
-    border-radius:2px;
-    border:1px solid #ccc;
-    margin-top:10px;
-    padding:5px;
-    width:400px;
+    border: 2px inset #ccc;
+    margin-top: 10px;
+    padding: 5px;
+    width: 400px;
+    font-family: 'Comic Sans MS';
+}
+
+.input-bar {
+    position: fixed;
+    bottom: 0;
+    height: 5rem;
+    width: 100%;
+    background-color: #C0C0C0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border-top: 2px outset #FFF;
 }
 
 #status {
-    width:88px;
-    display:block;
-    float:left;
-    margin-top:15px;
+    width: 88px;
+    display: block;
+    float: left;
+    margin-top: 15px;
 }
 
 .box {
+    float: left; /* Disable when ff28 lands, use flex-wrap: wrap in #content */
+    width: 350px;
+    height: 350px;
+    background-image: url('../backgrounds/field.gif');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin: 0.5rem;
+    outline: solid 3px #000;
+
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.actor {
+    max-width: 100%;
+    height: calc(100% - 2rem);
+    max-height: 100%;
     float: left;
-    width: 300px;
-    height: 300px;
+    margin: 1rem;
 }
 
 .chat-bubble {
     position: relative;
-    width: 120px;
+    max-width: 120px;
     padding: 10px;
     background: #FFFFFF;
     -webkit-border-radius: 10px;

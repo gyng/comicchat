@@ -7,10 +7,11 @@ function log (text) {
   console.log((new Date()) + ' ' + text);
 }
 
-var wsServerPort = 8084;
 var http = require('http');
 var websocketServer = require('websocket').server;
+var validator = require('validator');
 
+var wsServerPort = 8084;
 var historySize = 100;
 var history = [];
 var clients = [];
@@ -51,7 +52,7 @@ wsServer.on('request', function (request, response) {
           type: 'message',
           data: {
             time:   (new Date()).getTime(),
-            text:   message.utf8Data,
+            text:   validator.escape(message.utf8Data),
             author: username
           }
         });

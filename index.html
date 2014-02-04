@@ -8,16 +8,22 @@
 
 <body>
   <div id="content"></div>
-  <div>
+
+  <div class="input-bar">
     <span id="status">Connecting...</span>
-    <input type="text" id="input" placeholder="Your nickname" />
+    <input type="text" id="input" placeholder="Your nickname" autocomplete="off" autofocus />
   </div>
 
   <div id="box-template" class="template">
     <div class="box">
+    </div>
+  </div>
+
+  <div id="actor-template" class="template">
+    <div class="actor">
       <div class="text chat-bubble"></div>
-      <div class="avatar0"></div>
-      <div class="avatar1"></div>
+      <div class="name"></div>
+      <div class="avatar"></div>
     </div>
   </div>
 

@@ -14,6 +14,8 @@
 
   // Clear on init
   input.value = '';
+  var currentBoxActors = 0;
+  var currentBoxes = 0;
 
   var connection = new WebSocket(serverAddress);
 
@@ -45,7 +47,7 @@
   input.addEventListener('keypress', function (e) {
     if (e.keyCode === 13) {
       connection.send(input.value);
-      input.placeholder = '';
+      input.placeholder = 'Chat...';
       input.value = '';
       e.preventDefault();
     }
@@ -56,22 +58,35 @@
       { name: 'hugh', images: 1 },
       { name: 'lance', images: 1 }
     ];
-    var template = document.getElementById('box-template').innerHTML;
+    var boxTemplate   = document.getElementById('box-template').innerHTML;
+    var actorTemplate = document.getElementById('actor-template').innerHTML;
 
     var character = characters[message.author.length % characters.length];
-
     var avatar = document.createElement('img');
     avatar.src = './avatars/' + character.name + '/' + character.name + '' + Math.floor(Math.random(character.images)) + '.gif';
 
-    var box = document.createElement('div');
-    box.innerHTML = template;
-    box.querySelector('.text').innerHTML = message.text;
-    box.querySelector('.avatar0').innerHTML = message.author + '<br>';
-    box.querySelector('.avatar0').appendChild(avatar);
+    var actor = document.createElement('div');
+    actor.innerHTML = actorTemplate;
+    actor.querySelector('.text').innerHTML = message.text;
+    actor.querySelector('.name').innerHTML = message.author;
+    actor.querySelector('.avatar').appendChild(avatar);
 
-    //content.innerHTML = content.innerHTML + '<br>' + message.author + ': ' + message.text;
+    var newBox = (currentBoxActors >= 2 + ~~(2 * Math.random())) || (currentBoxes === 0);
 
-    content.appendChild(box.getElementsByTagName('div')[0]);
-    content.scrollTop = content.scrollHeight;
+    if (newBox === true) {
+      // Filled box or no boxes
+      box = document.createElement('div');
+      box.innerHTML = boxTemplate;
+      content.appendChild(box.getElementsByTagName('div')[0]);
+      // document.scrollTop = document.scrollHeight;
+      window.scrollTo(0, document.body.scrollHeight);
+      currentBoxActors = 0;
+      currentBoxes++;
+    }
+
+    var boxes = content.querySelectorAll(".box");
+    var box = boxes[boxes.length - 1];
+    box.appendChild(actor.getElementsByTagName('div')[0]);
+    currentBoxActors++;
   };
 })();
