@@ -74,8 +74,8 @@
 
     var character = characters[message.author.length % characters.length];
     var avatar = document.createElement('img');
-    var avatarImage = character.images[Math.floor(character.images.length * Math.random())];
-    avatar.src = './avatars/' + character.name + '/' + avatarImage + '.png';
+    var avatarImageIndex = getHashCode(message.text + ' ' + message.author + ' ' + currentBoxes) % character.images.length;
+    avatar.src = './avatars/' + character.name + '/' + character.images[avatarImageIndex] + '.png';
 
     var actor = document.createElement('div');
     actor.innerHTML = actorTemplate;
@@ -108,4 +108,15 @@
     box.appendChild(actor);
     currentBoxActors++;
   };
+
+  function getHashCode (string) {
+    var hash = 0;
+    if (string.length == 0) return hash;
+    for (var i = 0; i < string.length; i++) {
+      var char = string.charCodeAt(i);
+      hash = ((hash<<5)-hash)+char;
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash);
+  }
 })();
