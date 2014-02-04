@@ -1,10 +1,10 @@
 html, body {
-    font-family: "Comic Sans MS";
-    font-size: 12px;
-    padding: 0px;
     margin: 0px;
-    height: 100%;
+    padding: 0px;
     width: 100%;
+    height: 100%;
+    font-size: 12px;
+    font-family: "Comic Sans MS";
 }
 
 p {
@@ -12,14 +12,13 @@ p {
 }
 
 #content {
-    padding: 1rem 1rem 6rem 1rem;
-    background: #eee;
-    width: calc(100% - 2rem);
-
     float: left;  /*Remove when flex-wrapped*/
+    padding: 1rem 1rem 6rem 1rem;
+    width: calc(100% - 2rem);
+    background: #eee;
 
-    /*display: flex;*/
-    /*flex-direction: row;*/
+    /* display: flex; */
+    /* flex-direction: row; */
     /* Chrome-only before FF28 lands. Use float: left in .box for now */
     /* flex-wrap: wrap; */
 }
@@ -27,22 +26,22 @@ p {
 .input-bar {
     position: fixed;
     bottom: 0;
-    height: 5rem;
-    width: 100%;
-    background-color: #C0C0C0;
+    z-index: 10;
     display: flex;
+    padding: 0 1rem;
+    width: 100%;
+    height: 5rem;
+    border-top: 0.2rem outset #FFF;
+    background-color: #C0C0C0;
     align-items: center;
     justify-content: center;
-    z-index: 10;
-    border-top: 0.2rem outset #FFF;
-    padding: 0 1rem;
 }
 
 .options {
     display: flex;
+    margin: 0 2rem 0 0;
     justify-content: center;
     flex-grow: 0;
-    margin: 0 2rem 0 0;
 }
 
 .options div {
@@ -50,9 +49,9 @@ p {
 }
 
 #input {
-    border: 2px inset #ccc;
     padding: 0.5rem;
     width: calc(100% - 1.6rem);
+    border: 2px inset #ccc;
     font-family: 'Comic Sans MS';
 }
 
@@ -61,40 +60,40 @@ p {
 }
 
 .box {
+    display: flex;
     float: left; /* Disable when ff28 lands, use flex-wrap: wrap in #content */
+    overflow: hidden;
+    margin: 0.5rem;
+    padding: 1rem;
     width: 350px;
     height: 350px;
-    background-image: url('../res/backgrounds/field.gif');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    margin: 0.5rem;
     outline: solid 3px #000;
-    padding: 1rem;
-    display: flex;
+    background-image: url('../res/backgrounds/field.gif');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    -ms-interpolation-mode: nearest-neighbor;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
 
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
-    -ms-interpolation-mode: nearest-neighbor;
 }
 
 .actor {
-    max-width: 100%;
-    height: calc(100% - 1rem);
-    max-height: 100%;
     float: left;
     margin: 0.5rem;
+    max-width: 100%;
+    max-height: 100%;
+    height: calc(100% - 1rem);
 }
 
 .name {
    text-shadow:
      -1px -1px 0 #FFF,
       1px -1px 0 #FFF,
-      -1px 1px 0 #FFF,
-       1px 1px 0 #FFF;
+     -1px  1px 0 #FFF,
+      1px  1px 0 #FFF;
 }
 
 .avatar {
@@ -107,46 +106,46 @@ p {
 }
 .chat-bubble {
     position: relative;
+    padding: 0.7rem;
     max-width: 12rem;
     max-height: 20rem;
-    padding: 0.7rem;
-    background: #FFFFFF;
+    border: #000 solid 0.3rem;
     -webkit-border-radius: 1rem;
     -moz-border-radius: 1rem;
     border-radius: 1rem;
-    border: #000 solid 0.3rem;
+    background: #FFFFFF;
     font-weight: bold;
     font-size: 1.2rem;
 }
 
 .chat-bubble:after
 {
-    content: '';
     position: absolute;
-    border-style: solid;
-    border-width: 3rem 0.5rem 0;
-    border-color: #FFFFFF transparent;
-    display: block;
-    width: 0;
-    z-index: 1;
-    margin-left: 0.15rem;
     bottom: -2rem;
     left: 50%;
+    z-index: 1;
+    display: block;
+    margin-left: 0.15rem;
+    width: 0;
+    border-width: 3rem 0.5rem 0;
+    border-style: solid;
+    border-color: #FFFFFF transparent;
+    content: '';
 }
 
 .chat-bubble:before
 {
-    content: '';
     position: absolute;
-    border-style: solid;
-    border-width: 3rem 0.8rem 0;
-    border-color: #000 transparent;
-    display: block;
-    width: 0;
-    z-index: 0;
-    margin-left: -0.08rem;
     bottom: -3rem;
     left: 50%;
+    z-index: 0;
+    display: block;
+    margin-left: -0.08rem;
+    width: 0;
+    border-width: 3rem 0.8rem 0;
+    border-style: solid;
+    border-color: #000 transparent;
+    content: '';
 }
 
 .template {
@@ -154,10 +153,10 @@ p {
 }
 
 .flip-horizontal {
-    -moz-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    -o-transform: scaleX(-1);
-    transform: scaleX(-1);
     -ms-filter: fliph; /*IE*/
     filter: fliph; /*IE*/
+    -webkit-transform: scaleX(-1);
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
 }
