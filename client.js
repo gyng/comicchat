@@ -67,8 +67,8 @@
 
     var actor = document.createElement('div');
     actor.innerHTML = actorTemplate;
-    actor.querySelector('.text').innerHTML = message.text;
-    actor.querySelector('.name').innerHTML = message.author;
+    actor.querySelector('.text').appendChild(document.createTextNode(message.text));
+    actor.querySelector('.name').appendChild(document.createTextNode(message.author));
     actor.querySelector('.avatar').appendChild(avatar);
 
     if (currentBoxActors >= 2 || currentBoxes === 0) {
