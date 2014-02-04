@@ -82,6 +82,14 @@ p {
     margin: 1rem;
 }
 
+.name {
+   text-shadow:
+     -1px -1px 0 #FFF,
+      1px -1px 0 #FFF,
+      -1px 1px 0 #FFF,
+       1px 1px 0 #FFF;
+}
+
 .avatar {
     margin: 3rem 0 0 0;
     max-width: 100%;

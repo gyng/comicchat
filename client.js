@@ -6,11 +6,17 @@
   var input     = document.getElementById('input');
   var inputForm = document.getElementById('input-form');
   var status    = document.getElementById('status');
+  var notify    = document.getElementById('notify');
   var serverAddress = 'ws://hidoi.moebros.org:8084';
 
   if (typeof (window.WebSocket || window.MozWebSocket) === 'undefined') {
     content.innerHTML = 'Websocket support required.';
     return;
+  }
+
+  var notification = (window.Notification || window.webkitNotifications);
+  if (typeof notification !== 'undefined' && notification.permission !== 'denied') {
+    notification.requestPermission();
   }
 
   // Clear on init
@@ -41,6 +47,10 @@
       }
     } else if (json.type === 'message') {
       addLine(json.data);
+
+      if (notification.permission === 'granted' && notify.checked === true) {
+        var notice = new Notification('comicchat', { body: json.data.author + ": " + json.data.text });
+      }
     } else {
       console.log(json);
     }
