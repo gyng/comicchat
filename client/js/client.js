@@ -30,9 +30,11 @@
   };
 
   connection.onmessage = function (message) {
+    var obj;
+
     try {
-      var obj = JSON.parse(message.data);
-    } catch (e if e instanceof SyntaxError) {
+      obj = JSON.parse(message.data);
+    } catch (e) {
       console.log('Invalid message', e);
       return;
     }

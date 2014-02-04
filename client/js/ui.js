@@ -123,7 +123,7 @@ UI.prototype = {
   },
 
   loadCharacterManifest: function () {
-    var request = new XMLHttpRequest;
+    var request = new XMLHttpRequest();
     request.open('GET', './res/avatars/manifest.json', true);
     request.send();
 
@@ -136,13 +136,12 @@ UI.prototype = {
   getHashCode: function (string) {
     var hash = 0;
 
-    if (string.length == 0) {
+    if (string.length === 0) {
       return hash;
     }
 
     for (var i = 0; i < string.length; i++) {
-      var char = string.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
+      hash = ((hash << 5) - hash) + string.charCodeAt(i);
       hash = hash & hash; // Convert to 32bit integer
     }
 
