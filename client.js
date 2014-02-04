@@ -71,7 +71,7 @@
     ];
     var boxTemplate   = document.getElementById('box-template').innerHTML;
     var actorTemplate = document.getElementById('actor-template').innerHTML;
-    var actorsPerBox = 2;
+    var maxActorsPerBox = 2;
 
     var character = characters[message.author.length % characters.length];
     var avatar = document.createElement('img');
@@ -85,7 +85,16 @@
     actor.querySelector('.avatar').appendChild(avatar);
     actor = actor.getElementsByTagName('div')[0];
 
-    if (currentBoxActors >= actorsPerBox || currentBoxes === 0 || previousAuthor === message.author) {
+    // Make a new box if
+    // * We hit maximum number of actors in a box
+    // * No boxes
+    // * It's a monologue
+    var newBox =
+      currentBoxActors >= maxActorsPerBox ||
+      currentBoxes === 0 ||
+      previousAuthor === message.author;
+
+    if (newBox === true) {
       // Filled box or no boxes
       box = document.createElement('div');
       box.innerHTML = boxTemplate;
@@ -96,7 +105,7 @@
     }
 
     // Make characters face each other
-    if (currentBoxActors > 0) {
+    if (currentBoxActors >= maxActorsPerBox / 2) {
       if (avatar.classList) {
         avatar.classList.add('flip-horizontal');
       } else {
@@ -116,7 +125,7 @@
     if (string.length == 0) return hash;
     for (var i = 0; i < string.length; i++) {
       var char = string.charCodeAt(i);
-      hash = ((hash<<5)-hash)+char;
+      hash = ((hash << 5) - hash) + char;
       hash = hash & hash; // Convert to 32bit integer
     }
     return Math.abs(hash);
