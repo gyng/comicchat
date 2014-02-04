@@ -30,8 +30,12 @@ UI.prototype = {
   },
 
   setupNotifications: function () {
-    this.notification = (window.Notification || window.webkitNotifications);
-    if (typeof this.notification !== 'undefined' && this.notification.permission !== 'denied') {
+    this.notifyEnabled.onclick = this.requestNotificationsPermission.bind(this);
+    this.notification = this.notification || (window.Notification || window.webkitNotifications);
+  },
+
+  requestNotificationsPermission: function () {
+    if (typeof this.notification !== 'undefined' && this.notification.permission === 'default') {
       this.notification.requestPermission();
     }
   },
