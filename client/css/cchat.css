@@ -64,7 +64,7 @@ p {
     float: left; /* Disable when ff28 lands, use flex-wrap: wrap in #content */
     width: 350px;
     height: 350px;
-    background-image: url('../backgrounds/field.gif');
+    background-image: url('../res/backgrounds/field.gif');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     margin: 0.5rem;

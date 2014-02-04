@@ -116,10 +116,10 @@
       }
     ];
 
-    var character = characters[message.author.length % characters.length];
+    var character = characters[getHashCode(message.author) % characters.length];
     var avatar = document.createElement('img');
     var avatarImageIndex = getHashCode(message.text + ' ' + message.author + ' ' + currentBoxes) % character.images.length;
-    avatar.src = './avatars/' + character.name + '/' + character.images[avatarImageIndex] + '.png';
+    avatar.src = './res/avatars/' + character.name + '/' + character.images[avatarImageIndex] + '.png';
 
     // Make characters face each other
     if (flip === true) {
