@@ -32,11 +32,23 @@ UI.prototype = {
     this.status.innerHTML = status;
   },
 
+  connected: function () {
+    this.roomSwitcher.placeholder = window.location.hash;
+    this.roomSwitcher.value = window.location.hash;
+    this.input.disabled = false;
+    this.roomSwitcher.disabled = false;
+    this.setStatus('Connected.');
+  },
+
   disconnected: function () {
-    this.input.attr('disabled', 'disabled');
-    this.status.val('Unable to comminucate with the WebSocket server.');
-    this.roomSwitcher.attr('disabled', 'disabled');
+    this.input.disabled = true;
+    this.input.placeholder = 'No connection';
+    this.roomSwitcher.disabled = true;
     this.setStatus('Disconnected.');
+  },
+
+  reconnecting: function () {
+    this.setStatus('Reconnecting...');
   },
 
   setupNotifications: function () {

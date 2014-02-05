@@ -127,7 +127,7 @@ wsServer.on('request', function (request, response) {
   });
 
   connection.on('close', function (connection) {
-    log('Peer ' + connection.remoteAddress + ' disconnected');
+    log('Peer ' + username + ' ' + connection.remoteAddress + ' disconnected');
     joinedRooms.forEach(function (room) {
       leaveRoom(room);
     });

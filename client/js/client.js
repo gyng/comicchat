@@ -19,65 +19,85 @@
     return;
   }
 
-  var connection = new WebSocket(serverAddress);
-  ui.setConnection(connection);
+  function makeConnection (ws) {
+    ws.onopen = function () {
+      console.log('Connection to ' + serverAddress + ' established');
+      ui.connected();
 
-  document.getElementById('room-switcher').placeholder = window.location.hash;
-  document.getElementById('room-switcher').value = window.location.hash;
-
-  connection.onopen = function () {
-    console.log('Connection to ' + serverAddress + ' established');
-    ui.setStatus('Connected.');
-
-    // Join default room
-    if (window.location.hash === '') {
-      window.location.hash = '#!';
-    }
-
-    connection.send(JSON.stringify({
-      type: 'join',
-      room: window.location.hash
-    }));
-
-    connection.send(JSON.stringify({
-      type: 'history',
-      room: window.location.hash
-    }));
-
-    setInterval(function () {
-      if (connection.readyState !== 1) {
-        ui.disconnected();
+      if (retryHandlerID !== null) {
+        clearInterval(retryHandlerID);
+        retryHandlerID = null;
       }
-    }, 3000);
-  };
 
-  connection.onerror = function (e) {
-    console.log('Connection error', e);
-    ui.disconnected();
-  };
+      // Join default room
+      if (window.location.hash === '') {
+        window.location.hash = '#!';
+      }
 
-  connection.onmessage = function (message) {
-    var obj;
+      ws.send(JSON.stringify({
+        type: 'join',
+        room: window.location.hash
+      }));
 
-    try {
-      obj = JSON.parse(message.data);
-    } catch (e) {
-      console.log('Invalid message', e);
-      return;
-    }
+      ws.send(JSON.stringify({
+        type: 'history',
+        room: window.location.hash
+      }));
 
-    switch (obj.type) {
-    case 'history':
-      ui.addHistory(obj.history);
-      break;
-    case 'message':
-      ui.addLine(obj);
-      ui.tts(obj);
-      ui.notify(obj);
-      break;
-    default:
-      console.log('Unknown message', obj);
-      break;
-    }
-  };
+      setInterval(function () {
+        if (ws.readyState !== 1) {
+          ui.disconnected();
+        }
+      }, 3000);
+    };
+
+    ws.onerror = function (e) {
+      console.log('Connection error', e);
+      ui.disconnected();
+    };
+
+    ws.onclose = function (e) {
+      console.log('Connection closed', e);
+      ui.disconnected();
+
+      // Reconnect
+      retryHandlerID = setInterval(function () {
+        console.log('Attempting reconnect...');
+        ui.reconnecting();
+        var connection = makeConnection(new WebSocket(serverAddress));
+        ui.setConnection(connection);
+      }, 10000);
+    };
+
+    ws.onmessage = function (message) {
+      var obj;
+
+      try {
+        obj = JSON.parse(message.data);
+      } catch (e) {
+        console.log('Invalid message', e);
+        return;
+      }
+
+      switch (obj.type) {
+      case 'history':
+        ui.addHistory(obj.history);
+        break;
+      case 'message':
+        ui.addLine(obj);
+        ui.tts(obj);
+        ui.notify(obj);
+        break;
+      default:
+        console.log('Unknown message', obj);
+        break;
+      }
+    };
+
+    return ws;
+  }
+
+  var retryHandlerID = null;
+  var connection = makeConnection(new WebSocket(serverAddress));
+  ui.setConnection(connection);
 })();
