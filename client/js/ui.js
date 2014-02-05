@@ -35,6 +35,7 @@ UI.prototype = {
   connected: function () {
     this.roomSwitcher.placeholder = window.location.hash;
     this.roomSwitcher.value = window.location.hash;
+    this.input.placeholder = 'Your nickname...';
     this.input.disabled = false;
     this.roomSwitcher.disabled = false;
     this.setStatus('Connected.');
