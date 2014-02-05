@@ -6,7 +6,15 @@ Based off Microsoft Comic Chat. Uses node.js and websockets.
 
 ![Screenshot](http://i.imgur.com/J1k7iwn.png)
 
-## Use
+## Features
+
+* Comic chat
+* Rooms
+* Notifications
+* Google Translate text-to-speech abuse (Chrome only right now)
+
+## Usage
+
 0. Clone repo.
 1. `npm install websocket`
 2. Change address of server in `client.js`
@@ -14,7 +22,27 @@ Based off Microsoft Comic Chat. Uses node.js and websockets.
 4. `node server.js`
 5. Visit `index.html`
 
+## Protocol
+
+Connect to the WebSocket server and start pushing JSON. Subject to change.
+
+### Send
+
+    {
+        type: 'join',
+        room: 'room'
+    }
+
+* `history`, `join`, `part` require `room`
+* `message` requires `room` and `text`
+
+### Receive
+
+* `history` --- `type`, `history` (an array of messages for the requested room)
+* `message` --- `type`, `room`, `time`, `text`, `author`
+
 ## TODO
+
 * More characters
 * More algorithm
 * More styling
