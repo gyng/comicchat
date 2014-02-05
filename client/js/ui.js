@@ -46,7 +46,7 @@ UI.prototype = {
     if (typeof this.notification !== 'undefined' &&
         this.notification.permission === 'granted' &&
         this.notifyEnabled.checked === true) {
-      new Notification('comicchat', {
+      new Notification('comicchat ' + data.room, {
         lang: 'en-US',
         icon: './res/icon.gif',
         body: data.author + ": " + data.text
@@ -90,7 +90,11 @@ UI.prototype = {
   setupShortcuts: function () {
     this.inputForm.onsubmit = function (e) {
       e.preventDefault();
-      this.connection.send(this.input.value);
+      this.connection.send(JSON.stringify({
+        type: 'message',
+        room: document.location.hash,
+        text: this.input.value
+      }));
       this.input.placeholder = 'Chat...';
       this.inputForm.reset();
     }.bind(this);
@@ -98,7 +102,7 @@ UI.prototype = {
 
   addHistory: function (history) {
     for (var i = 0; i < history.length; i++) {
-      this.addLine(JSON.parse(history[i]).data);
+      this.addLine(JSON.parse(history[i]));
     }
   },
 

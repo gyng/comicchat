@@ -20,9 +20,18 @@
   var connection = new WebSocket(serverAddress);
   ui.setConnection(connection);
 
+  // Join default room
+  if (window.location.hash === '') {
+    window.location.hash = '#!';
+  }
+
   connection.onopen = function () {
     console.log('Connection to ' + serverAddress + ' established');
     ui.setStatus('Connected.');
+    connection.send(JSON.stringify({
+      type: 'requestHistory',
+      room: window.location.hash
+    }));
   };
 
   connection.onerror = function (e) {
@@ -42,12 +51,12 @@
 
     switch (obj.type) {
     case 'history':
-      ui.addHistory(obj.data);
+      ui.addHistory(obj.history);
       break;
     case 'message':
-      ui.addLine(obj.data);
-      ui.tts(obj.data);
-      ui.notify(obj.data);
+      ui.addLine(obj);
+      ui.tts(obj);
+      ui.notify(obj);
       break;
     default:
       console.log('Unknown message', obj);
