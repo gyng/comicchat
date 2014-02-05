@@ -42,61 +42,80 @@ wsServer.on('request', function (request, response) {
   var room = false;
   var roomIndex = false;
 
+  function sendHistory (room) {
+    initRoom(room);
+
+    // Send room scrollback
+    connection.sendUTF(JSON.stringify({
+      type: 'history',
+      history: rooms[room].history
+    }));
+  }
+
+  function joinRoom (newRoom) {
+    room = newRoom;
+    roomIndex = rooms[newRoom].clients.push(connection);
+  }
+
   connection.on('message', function (message) {
-    if (message.type === 'utf8') {
-      log(' <- ' + username + ': ' + message.utf8Data);
+    try {
+      if (message.type === 'utf8') {
+        log(' <- ' + username + ': ' + message.utf8Data);
 
-      var obj;
-      try {
-        obj = JSON.parse(message.utf8Data);
-      } catch (e) {
-        log(' Bad message ' + username + ': ' + message.utf8Data);
-        log(e);
-        return;
-      }
-
-      switch (obj.type) {
-      case 'requestHistory':
-        initRoom(obj.room);
-
-        // Send room scrollback
-        connection.sendUTF(JSON.stringify({
-          type: 'history',
-          history: rooms[obj.room].history
-        }));
-        break;
-      case 'requestStatus':
-        connection.sendUTF(JSON.stringify({
-          type: 'status',
-          clients: clients.length,
-          rooms: rooms.length
-        }));
-        break;
-      case 'message':
-        if (username === false) {
-          // Register -- TODO: split out into message type
-          username  = obj.text;
-          room      = obj.room;
-          roomIndex = rooms[obj.room].clients.push(connection);
-        } else {
-          // Broadcast
-          var json = JSON.stringify({
-            type: 'message',
-            room:   obj.room,
-            time:   (new Date()).getTime(),
-            text:   obj.text,
-            author: username
-          });
-
-          rooms[obj.room].history.push(json);
-          rooms[obj.room].history.slice(-100);
-
-          rooms[obj.room].clients.forEach(function (client) {
-            client.sendUTF(json);
-          });
+        var obj;
+        try {
+          obj = JSON.parse(message.utf8Data);
+        } catch (e) {
+          log(' Bad message ' + username + ': ' + message.utf8Data);
+          log(e);
+          return;
         }
-        break;
+
+        switch (obj.type) {
+        case 'requestHistory':
+          sendHistory(obj.room);
+          break;
+        case 'changeRoom':
+          if (roomIndex !== false) rooms[room].clients.splice(roomIndex, 1);
+          initRoom(obj.room);
+          joinRoom(obj.room);
+          break;
+        case 'requestStatus':
+          connection.sendUTF(JSON.stringify({
+            type:    'status',
+            clients: clients.length,
+            rooms:   rooms.length
+          }));
+          break;
+        case 'message':
+          if (username === false) {
+            // Register -- TODO: split out into message type
+            username  = obj.text;
+            room      = obj.room;
+            roomIndex = rooms[obj.room].clients.push(connection);
+          } else {
+            // Broadcast
+            var json = JSON.stringify({
+              type: 'message',
+              room:   obj.room,
+              time:   (new Date()).getTime(),
+              text:   obj.text,
+              author: username
+            });
+
+            rooms[obj.room].history.push(json);
+            rooms[obj.room].history.slice(-100);
+
+            rooms[obj.room].clients.forEach(function (client) {
+              client.sendUTF(json);
+            });
+          }
+          break;
+        }
       }
+    } catch (e) {
+      log(' Error in connection.on');
+      log(e);
     }
   });
 
@@ -104,7 +123,7 @@ wsServer.on('request', function (request, response) {
     log('Peer ' + connection.remoteAddress + ' disconnected');
     clients.splice(index, 1);
     if (roomIndex !== false) {
-      rooms[room].clients.splice(index, 1);
+      rooms[room].clients.splice(roomIndex, 1);
     }
   });
 });

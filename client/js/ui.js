@@ -1,10 +1,12 @@
 function UI (elements) {
-  this.content       = elements.content;
-  this.input         = elements.input;
-  this.inputForm     = elements.inputForm;
-  this.status        = elements.status;
-  this.notifyEnabled = elements.notifyEnabled;
-  this.ttsEnabled    = elements.ttsEnabled;
+  this.content          = elements.content;
+  this.input            = elements.input;
+  this.inputForm        = elements.inputForm;
+  this.status           = elements.status;
+  this.notifyEnabled    = elements.notifyEnabled;
+  this.ttsEnabled       = elements.ttsEnabled;
+  this.roomSwitcher     = elements.roomSwitcher;
+  this.roomSwitcherForm = elements.roomSwitcherForm;
 
   this.connection   = null;
   this.notification = null;
@@ -98,6 +100,31 @@ UI.prototype = {
       this.input.placeholder = 'Chat...';
       this.inputForm.reset();
     }.bind(this);
+
+    this.roomSwitcherForm.onsubmit = function (e) {
+      e.preventDefault();
+      // Change room
+      window.location.hash = this.roomSwitcher.value;
+      this.connection.send(JSON.stringify({
+        type: 'changeRoom',
+        room: window.location.hash
+      }));
+      this.roomSwitcher.value = window.location.hash;
+      this.roomSwitcher.placeholder = window.location.hash;
+
+      // Grab history of new room
+      this.clearContent();
+      this.connection.send(JSON.stringify({
+        type: 'requestHistory',
+        room: window.location.hash
+      }));
+    }.bind(this);
+  },
+
+  clearContent: function () {
+    this.content.innerHTML = '';
+    this.currentBoxActors = 0;
+    this.currentBoxes = 0;
   },
 
   addHistory: function (history) {

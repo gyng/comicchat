@@ -4,12 +4,14 @@
   var serverAddress = 'ws://hidoi.moebros.org:8084';
 
   var ui = new UI({
-    content:       document.getElementById('content'),
-    input:         document.getElementById('input'),
-    inputForm:     document.getElementById('input-form'),
-    status:        document.getElementById('status'),
-    notifyEnabled: document.getElementById('notify'),
-    ttsEnabled:    document.getElementById('tts')
+    content:          document.getElementById('content'),
+    input:            document.getElementById('input'),
+    inputForm:        document.getElementById('input-form'),
+    status:           document.getElementById('status'),
+    notifyEnabled:    document.getElementById('notify'),
+    ttsEnabled:       document.getElementById('tts'),
+    roomSwitcher:     document.getElementById('room-switcher'),
+    roomSwitcherForm: document.getElementById('room-switcher-form')
   });
 
   if (typeof (window.WebSocket || window.MozWebSocket) === 'undefined') {
@@ -24,6 +26,9 @@
   if (window.location.hash === '') {
     window.location.hash = '#!';
   }
+
+  document.getElementById('room-switcher').placeholder = window.location.hash;
+  document.getElementById('room-switcher').value = window.location.hash;
 
   connection.onopen = function () {
     console.log('Connection to ' + serverAddress + ' established');
