@@ -4,6 +4,7 @@ function UI (elements) {
   this.inputForm     = elements.inputForm;
   this.status        = elements.status;
   this.notifyEnabled = elements.notifyEnabled;
+  this.ttsEnabled    = elements.ttsEnabled;
 
   this.connection   = null;
   this.notification = null;
@@ -50,6 +51,39 @@ UI.prototype = {
         icon: './res/icon.gif',
         body: data.author + ": " + data.text
       });
+    }
+  },
+
+  tts: function (data) {
+    if (this.ttsEnabled.checked === true) {
+      var languages = [
+        'en', 'en-US', 'en-UK', 'en-CA', 'en-AU', 'en-NZ',
+        'af', 'sq', 'ar', 'hy', 'ca', 'zh-CN', 'zh-TW', 'hr', 'cs', 'da',
+        'nl', 'eo', 'fi', 'fr', 'de', 'el', 'ht', 'hi',
+        'hu', 'is', 'id', 'it', 'ja', 'ko', 'la', 'lv',
+        'mk', 'no', 'pl', 'pt', 'ro', 'ru', 'sr', 'sk',
+        'es', 'sw', 'sv', 'ta', 'th', 'tr', 'vi', 'cy'
+      ];
+
+      // Pick 'random' language 'voice'
+      var language = languages[Math.floor(this.getHashCode(data.author)) % languages.length];
+
+      // Basic language guessing (CJK now).
+      // Override if language detected.
+      // Only works for languages with different character sets.
+      // Calling Google's detect language API needs JSONP (I think), which
+      // is too much trouble now. Exceptions are here.
+      if (data.text.match(/[\u3040-\u309F\u30A0-\u30FF]/g)) {
+        language = 'ja';
+      } else if (data.text.match(/[\u1100-\u11FF\u3130-\u318F\uAC00-\uD7AF]/g)) {
+        language = 'ko';
+      } else if (data.text.match(/[\u4E00-\u9FFF]/g)) {
+        language = 'zh-CN';
+      }
+
+      var google_tts = "http://translate.google.com/translate_tts?ie=UTF-8&q=" + data.text + '&tl=' + language;
+      var sound = new Audio(google_tts);
+      sound.play();
     }
   },
 

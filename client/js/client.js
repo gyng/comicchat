@@ -8,7 +8,8 @@
     input:         document.getElementById('input'),
     inputForm:     document.getElementById('input-form'),
     status:        document.getElementById('status'),
-    notifyEnabled: document.getElementById('notify')
+    notifyEnabled: document.getElementById('notify'),
+    ttsEnabled:    document.getElementById('tts')
   });
 
   if (typeof (window.WebSocket || window.MozWebSocket) === 'undefined') {
@@ -45,6 +46,7 @@
       break;
     case 'message':
       ui.addLine(obj.data);
+      ui.tts(obj.data);
       ui.notify(obj.data);
       break;
     default:
