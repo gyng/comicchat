@@ -81,7 +81,7 @@ UI.prototype = {
         language = 'zh-CN';
       }
 
-      var google_tts = "http://translate.google.com/translate_tts?ie=UTF-8&q=" + data.text + '&tl=' + language;
+      var google_tts = "http://translate.google.com/translate_tts?ie=utf-8&q=" + data.text + '&tl=' + language;
       var sound = new Audio(google_tts);
       sound.play();
     }

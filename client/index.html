@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="referrer" content="never">
   <title>comic chat</title>
   <link rel="stylesheet" href="./css/cchat.css">
   <link rel="shortcut icon" href="./res/icon.gif" />
@@ -21,10 +22,10 @@
       <div id="status" class="status">Connecting...</div>
 
       <input type="checkbox" name="notify" id="notify" />
-      <label for="notify">Notifications</label>
+      <label title="Requires Notifications API support." for="notify">Notifications</label>
 
       <input type="checkbox" name="tts" id="tts" />
-      <label for="tts">Google text-to-speech</label>
+      <label title="Until FF implements meta referrer or when I am able to debug IE.&#10;Or you could run the client locally." for="tts">Text-to-speech (Chrome only)</label>
     </div>
   </div>
 
