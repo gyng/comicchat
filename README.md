@@ -12,6 +12,7 @@ Based off Microsoft Comic Chat. Uses node.js and websockets.
 * Rooms
 * Notifications
 * Google Translate text-to-speech abuse (Chrome only right now)
+* Basic relay support for animating your (IRC) chat
 
 ## Usage
 
@@ -34,7 +35,7 @@ Connect to the WebSocket server and start pushing JSON. Subject to change.
     }
 
 * `history`, `join`, `part` require `room`
-* `message` requires `room` and `text`
+* `message` requires `room` and `text`, `spoof: true` optional for relays
 
 ### Receive
 
