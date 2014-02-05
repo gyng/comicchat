@@ -109,7 +109,7 @@ wsServer.on('request', function (request, response) {
               room:   obj.room,
               time:   (new Date()).getTime(),
               text:   obj.text,
-              author: username
+              author: obj.spoof ? obj.author : username
             });
 
             rooms[obj.room].history.push(json);
