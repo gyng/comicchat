@@ -103,19 +103,25 @@ UI.prototype = {
 
     this.roomSwitcherForm.onsubmit = function (e) {
       e.preventDefault();
-      // Change room
-      window.location.hash = this.roomSwitcher.value;
+      // Change room -- part and join (no multiroom support in front end)
       this.connection.send(JSON.stringify({
-        type: 'changeRoom',
+        type: 'part',
         room: window.location.hash
       }));
+
+      window.location.hash = this.roomSwitcher.value;
+      this.connection.send(JSON.stringify({
+        type: 'join',
+        room: window.location.hash
+      }));
+
       this.roomSwitcher.value = window.location.hash;
       this.roomSwitcher.placeholder = window.location.hash;
 
       // Grab history of new room
       this.clearContent();
       this.connection.send(JSON.stringify({
-        type: 'requestHistory',
+        type: 'history',
         room: window.location.hash
       }));
     }.bind(this);

@@ -39,8 +39,7 @@ wsServer.on('request', function (request, response) {
   var connection = request.accept(null, request.origin);
   var index = clients.push(connection) - 1;
   var username = false;
-  var room = false;
-  var roomIndex = false;
+  var joinedRooms = [];
 
   function sendHistory (room) {
     initRoom(room);
@@ -53,8 +52,26 @@ wsServer.on('request', function (request, response) {
   }
 
   function joinRoom (newRoom) {
-    room = newRoom;
-    roomIndex = rooms[newRoom].clients.push(connection);
+    initRoom(newRoom);
+    rooms[newRoom].clients.push(connection);
+    joinedRooms.push(newRoom);
+  }
+
+  function leaveRoom (room) {
+    var i;
+    if (typeof rooms[room] !== 'undefined') {
+      i = rooms[room].clients.indexOf(connection);
+      rooms[room].clients.splice(i, 1);
+    }
+
+    i = joinedRooms.indexOf(room);
+    joinedRooms.splice(i, 1);
+  }
+
+  function broadcastTo (room, data) {
+    rooms[room].clients.forEach(function (client) {
+      client.sendUTF(data);
+    });
   }
 
   connection.on('message', function (message) {
@@ -72,27 +89,19 @@ wsServer.on('request', function (request, response) {
         }
 
         switch (obj.type) {
-        case 'requestHistory':
+        case 'history':
           sendHistory(obj.room);
           break;
-        case 'changeRoom':
-          if (roomIndex !== false) rooms[room].clients.splice(roomIndex, 1);
-          initRoom(obj.room);
+        case 'join':
           joinRoom(obj.room);
           break;
-        case 'requestStatus':
-          connection.sendUTF(JSON.stringify({
-            type:    'status',
-            clients: clients.length,
-            rooms:   rooms.length
-          }));
+        case 'part':
+          leaveRoom(obj.room);
           break;
         case 'message':
           if (username === false) {
-            // Register -- TODO: split out into message type
+            // Register -- split out into message type?
             username  = obj.text;
-            room      = obj.room;
-            roomIndex = rooms[obj.room].clients.push(connection);
           } else {
             // Broadcast
             var json = JSON.stringify({
@@ -106,9 +115,7 @@ wsServer.on('request', function (request, response) {
             rooms[obj.room].history.push(json);
             rooms[obj.room].history.slice(-100);
 
-            rooms[obj.room].clients.forEach(function (client) {
-              client.sendUTF(json);
-            });
+            broadcastTo(obj.room, json);
           }
           break;
         }
@@ -121,9 +128,9 @@ wsServer.on('request', function (request, response) {
 
   connection.on('close', function (connection) {
     log('Peer ' + connection.remoteAddress + ' disconnected');
+    joinedRooms.forEach(function (room) {
+      leaveRoom(room);
+    });
     clients.splice(index, 1);
-    if (roomIndex !== false) {
-      rooms[room].clients.splice(roomIndex, 1);
-    }
   });
 });

@@ -22,19 +22,25 @@
   var connection = new WebSocket(serverAddress);
   ui.setConnection(connection);
 
-  // Join default room
-  if (window.location.hash === '') {
-    window.location.hash = '#!';
-  }
-
   document.getElementById('room-switcher').placeholder = window.location.hash;
   document.getElementById('room-switcher').value = window.location.hash;
 
   connection.onopen = function () {
     console.log('Connection to ' + serverAddress + ' established');
     ui.setStatus('Connected.');
+
+    // Join default room
+    if (window.location.hash === '') {
+      window.location.hash = '#!';
+    }
+
     connection.send(JSON.stringify({
-      type: 'requestHistory',
+      type: 'join',
+      room: window.location.hash
+    }));
+
+    connection.send(JSON.stringify({
+      type: 'history',
       room: window.location.hash
     }));
   };
