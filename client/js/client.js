@@ -43,11 +43,17 @@
       type: 'history',
       room: window.location.hash
     }));
+
+    setInterval(function () {
+      if (connection.readyState !== 1) {
+        ui.disconnected();
+      }
+    }, 3000);
   };
 
   connection.onerror = function (e) {
     console.log('Connection error', e);
-    ui.setStatus('Disconnected.');
+    ui.disconnected();
   };
 
   connection.onmessage = function (message) {

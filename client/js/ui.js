@@ -32,6 +32,13 @@ UI.prototype = {
     this.status.innerHTML = status;
   },
 
+  disconnected: function () {
+    this.input.attr('disabled', 'disabled');
+    this.status.val('Unable to comminucate with the WebSocket server.');
+    this.roomSwitcher.attr('disabled', 'disabled');
+    this.setStatus('Disconnected.');
+  },
+
   setupNotifications: function () {
     this.notifyEnabled.onclick = this.requestNotificationsPermission.bind(this);
     this.notification = this.notification || (window.Notification || window.webkitNotifications);
