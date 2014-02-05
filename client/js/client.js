@@ -43,12 +43,6 @@
         type: 'history',
         room: window.location.hash
       }));
-
-      setInterval(function () {
-        if (ws.readyState !== 1) {
-          ui.disconnected();
-        }
-      }, 3000);
     };
 
     ws.onerror = function (e) {
