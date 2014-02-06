@@ -106,7 +106,7 @@ function makeIRC() {
       irc.raw('JOIN ' + config.irc.channel);
     });
 
-    irc.on(/^:.+!(.+)@.+ PRIVMSG #.+ :(.+)$/i, function (info) {
+    irc.on(/^:.+!(.+)@.+ PRIVMSG .+ :(.+)$/i, function (info) {
       if (wsConnection && wsConnection.send) {
         log('CC -> RELAY ' + info[1] + ': ' + info[2]);
         wsConnection.send(JSON.stringify({
