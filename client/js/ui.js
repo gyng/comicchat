@@ -78,13 +78,15 @@ UI.prototype = {
 
   tts: function (data) {
     if (this.ttsEnabled.checked === true) {
+      // Bad languages for English: el, ar, zh-CN, zh-TW, th,
+      // Removed similar sounding, robotic: af, sq, ro, sr, sw, vi, cy, ca, hr
+      // Left eo for robot voice
       var languages = [
         'en', 'en-US', 'en-UK', 'en-CA', 'en-AU', 'en-NZ',
-        'af', 'sq', 'ar', 'hy', 'ca', 'zh-CN', 'zh-TW', 'hr', 'cs', 'da',
-        'nl', 'eo', 'fi', 'fr', 'de', 'el', 'ht', 'hi',
-        'hu', 'is', 'id', 'it', 'ja', 'ko', 'la', 'lv',
-        'mk', 'no', 'pl', 'pt', 'ro', 'ru', 'sr', 'sk',
-        'es', 'sw', 'sv', 'ta', 'th', 'tr', 'vi', 'cy'
+        'hy', 'cs', 'nl', 'eo', 'fi', 'fr', 'de', 'ht',
+        'hi', 'da', 'hu', 'is', 'id', 'it', 'ja', 'ko',
+        'la', 'lv', 'mk', 'no', 'pl', 'pt', 'ru', 'sk',
+        'es', 'sv', 'ta', 'vi'
       ];
 
       // Pick 'random' language 'voice'
