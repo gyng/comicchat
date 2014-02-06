@@ -232,7 +232,7 @@ UI.prototype = {
   },
 
   getHashCode: function (string) {
-    var hash = 0;
+    var hash = 31;
 
     if (string.length === 0) {
       return hash;
