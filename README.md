@@ -42,6 +42,10 @@ Connect to the WebSocket server and start pushing JSON. Subject to change.
 * `history` --- `type`, `history` (an array of messages for the requested room)
 * `message` --- `type`, `room`, `time`, `text`, `author`
 
+## Relay
+
+If you want to watch your Best Internet IRC Friends in a voiced comic you can configure `relay/relay.js` and then run it with `node relay/relay.js`.
+
 ## TODO
 
 * More characters
