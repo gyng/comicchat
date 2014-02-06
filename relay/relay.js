@@ -58,7 +58,7 @@ function makeComicChat () {
       [
         { type: 'join',    room: config.cchat.room },
         { type: 'message', room: config.cchat.room, text: config.cchat.nick },
-        { type: 'message', room: config.cchat.room, text: 'IRC relay to ' + config.irc.host + ' connected.' }
+        { type: 'message', room: config.cchat.room, text: 'Hello everyone! ' + config.irc.host + ' messenger here.' }
       ].forEach(function (message) {
         connection.sendUTF(JSON.stringify(message));
       });
@@ -93,6 +93,7 @@ makeComicChat();
 
 var irc = {};
 irc.listeners = [];
+irc.pingTimerID = null;
 
 function makeIRC() {
   var connectHandler = function () {
@@ -123,6 +124,14 @@ function makeIRC() {
 
     irc.raw('NICK ' + config.irc.nick);
     irc.raw('USER ' + config.irc.user + ' 8 * :' + config.irc.real);
+
+    if (irc.pingTimerID !== null) {
+      clearInterval(irc.pingTimerID);
+    }
+
+    irc.pingTimerID = setInterval(function () {
+      irc.raw('PING BONG');
+    }, 60000);
   };
 
   if (config.irc.ssl === true) {
