@@ -192,6 +192,10 @@ function makeIRC() {
   irc.socket.on('close', function () {
     makeIRC();
   });
+
+  irc.socket.on('error', function () {
+    makeIRC();
+  });
 }
 
 makeIRC();
