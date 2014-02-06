@@ -58,7 +58,7 @@ function makeComicChat () {
       [
         { type: 'join',    room: config.cchat.room },
         { type: 'message', room: config.cchat.room, text: config.cchat.nick },
-        { type: 'message', room: config.cchat.room, text: 'Hello everyone! ' + config.irc.host + ' messenger here.' }
+        { type: 'message', room: config.cchat.room, text: 'Hello everyone! ' + config.irc.host + ' ' + config.irc.channel +' messenger here.' }
       ].forEach(function (message) {
         connection.sendUTF(JSON.stringify(message));
       });
