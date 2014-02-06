@@ -55,12 +55,14 @@
       ui.disconnected();
 
       // Reconnect
-      retryHandlerID = setInterval(function () {
-        console.log('Attempting reconnect...');
-        ui.reconnecting();
-        var connection = makeConnection(new WebSocket(serverAddress));
-        ui.setConnection(connection);
-      }, 10000);
+      if (retryHandlerID === null) {
+        retryHandlerID = setInterval(function () {
+          console.log('Attempting reconnect...');
+          ui.reconnecting();
+          var connection = makeConnection(new WebSocket(serverAddress));
+          ui.setConnection(connection);
+        }, 10000);
+      }
     };
 
     ws.onmessage = function (message) {
