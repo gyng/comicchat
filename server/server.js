@@ -13,7 +13,7 @@ var http = require('http');
 var websocketServer = require('websocket').server;
 
 var wsServerPort = 8084;
-var historySize = 100;
+var historySize = 500;
 var clients = [];
 var rooms = {};
 
@@ -113,7 +113,7 @@ wsServer.on('request', function (request, response) {
             });
 
             rooms[obj.room].history.push(json);
-            rooms[obj.room].history.slice(-100);
+            rooms[obj.room].history = rooms[obj.room].history.slice(-100);
 
             broadcastTo(obj.room, json);
           }
