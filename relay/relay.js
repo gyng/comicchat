@@ -13,9 +13,10 @@ var WebSocketClient = require('websocket').client;
 var config = {
   cchat: {
     nick: 'ircrelay',
-    room: '#!',
+    room: '#relay',
     host: 'hidoi.moebros.org',
-    port: 8084
+    port: 8084,
+    roomLink:  'http://hidoi.moebros.org:8081/files/comicchat/client/#relay'
   },
   irc: {
     nick: 'comicrelay',
@@ -105,6 +106,7 @@ function makeIRC() {
 
     irc.on(/^.+ 001 .+$/i, function () {
       irc.raw('JOIN ' + config.irc.channel);
+      irc.raw('PRIVMSG ' + config.irc.channel + ' Relaying to: ' + config.cchat.roomLink);
     });
 
     irc.on(/^:(.+)!.+@.+ PRIVMSG .+? :(.+)$/i, function (info) {
