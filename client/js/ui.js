@@ -14,6 +14,7 @@ function UI (elements) {
   this.maxActorsPerBox = 2;
   this.currentBoxActors = 0;
   this.currentBoxes = 0;
+  this.currentBox = null;
   this.previousAuthor = null;
 
   this.input.value = ''; // Clear on init
@@ -157,11 +158,12 @@ UI.prototype = {
 
   addHistory: function (history) {
     for (var i = 0; i < history.length; i++) {
-      this.addLine(JSON.parse(history[i]));
+      this.addLine(JSON.parse(history[i]), false);
     }
+    window.scrollTo(0, document.body.scrollHeight);
   },
 
-  addLine: function (message) {
+  addLine: function (message, stickBottom) {
     // Make a new box if
     // * We hit maximum number of actors in a box
     // * No boxes
@@ -172,17 +174,18 @@ UI.prototype = {
       this.previousAuthor === message.author;
 
     if (newBox === true) {
-      this.content.appendChild(this.makeBox());
-      window.scrollTo(0, document.body.scrollHeight);
+      this.currentBox = this.makeBox();
+      this.content.appendChild(this.currentBox);
+      if (typeof stickBottom === 'undefined' || stickBottom === true) {
+        window.scrollTo(0, document.body.scrollHeight);
+      }
       this.currentBoxActors = 0;
       this.currentBoxes++;
     }
 
-    var boxes = this.content.querySelectorAll(".box");
-    var box = boxes[boxes.length - 1];
     var flip = this.currentBoxActors >= this.maxActorsPerBox / 2;
 
-    box.appendChild(this.makeActor(message, flip));
+    this.currentBox.appendChild(this.makeActor(message, flip));
     this.currentBoxActors++;
     this.previousAuthor = message.author;
   },
