@@ -106,7 +106,7 @@ input[type=text] {
 }
 
 .avatar img {
-    max-width: 100%;
+    width: 100%;
 }
 .chat-bubble {
     position: relative;
