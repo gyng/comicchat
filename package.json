@@ -1,0 +1,19 @@
+{
+  "name": "comicchat",
+  "version": "0.0.1",
+  "description": "a web version of comicchat",
+  "main": "server/server.js",
+  "dependencies": {
+    "websocket": "~1.0.22"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gyng/comicchat.git"
+  },
+  "author": "",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/gyng/comicchat/issues"
+  }
+}
