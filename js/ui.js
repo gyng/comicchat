@@ -244,7 +244,7 @@ UI.prototype = {
 
   loadCharacterManifest: function () {
     var request = new XMLHttpRequest();
-    request.open('GET', './res/avatars/manifest.json', true);
+    request.open('GET', './res/avatars/manifest.json', false);
     request.send();
 
     var that = this;
