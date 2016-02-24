@@ -28,7 +28,7 @@ function UI (elements) {
 
   this.setupShortcuts();
   this.setupNotifications();
-  this.loadCharacterManifest();
+  // this.loadCharacterManifest(); // Character manifest loaded by client first
 }
 
 UI.prototype = {
@@ -242,14 +242,17 @@ UI.prototype = {
     return actor.getElementsByTagName('div')[0];
   },
 
-  loadCharacterManifest: function () {
+  loadCharacterManifest: function (isAsync) {
     var request = new XMLHttpRequest();
-    request.open('GET', './res/avatars/manifest.json', true);
+    request.open('GET', './res/avatars/manifest.json', isAsync);
     request.send();
 
     var that = this;
     request.onload = function() {
       that.characters = JSON.parse(this.response);
+      if (typeof callback !== 'undefined') {
+        callback();
+      }
     };
   },
 

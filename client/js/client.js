@@ -94,6 +94,10 @@
   }
 
   var retryHandlerID = null;
-  var connection = makeConnection(new WebSocket(serverAddress));
-  ui.setConnection(connection);
+  ui.loadCharacterManifest(function () {
+    // HACK: ideally it shouldn't matter if characters aren't loaded yet
+    //       The UI should rerender when it loads characters.
+    var connection = makeConnection(new WebSocket(serverAddress));
+    ui.setConnection(connection);
+  });
 })();
