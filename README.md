@@ -17,11 +17,15 @@ Based off Microsoft Comic Chat. Uses node.js and websockets.
 ## Usage
 
 0. Clone repo.
-1. `npm install websocket`
+1. `npm install`
 2. Change address of server in `client/js/client.js`
 3. Change port of server in `server/server.js`
-4. `node server/server.js`
+4. `node server/server.js` or `npm start`
 5. Visit `client/index.html`
+
+## Deploy
+
+* Deploy the client to `gh-pages` with `npm run deploy`
 
 ## Protocol
 
@@ -48,10 +52,6 @@ If you want to watch your Best Internet IRC Friends in a voiced comic you can co
 
 ## TODO
 
-* More characters
-* More algorithm
-* More styling
-* Cleaner code
-* Everything else
+* Tests
 
 `</font>`

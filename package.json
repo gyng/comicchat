@@ -3,10 +3,15 @@
   "version": "0.0.1",
   "description": "a web version of comicchat",
   "main": "server/server.js",
+  "scripts": {
+    "deploy": "gh-pages -d client"
+  },
   "dependencies": {
     "websocket": "~1.0.22"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gh-pages": "^0.10.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gyng/comicchat.git"
