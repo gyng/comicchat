@@ -1,5 +1,3 @@
-/* jslint node: true */
-
 'use strict';
 
 process.title = 'comicchat-server';
@@ -34,7 +32,7 @@ function initRoom (name) {
   rooms[name].clients = rooms[name].clients || [];
 }
 
-wsServer.on('request', function (request, response) {
+wsServer.on('request', function (request, _response) {
   log('Connection from origin ' + request.origin);
   var connection = request.accept(null, request.origin);
   var index = clients.push(connection) - 1;
@@ -113,7 +111,7 @@ wsServer.on('request', function (request, response) {
             });
 
             rooms[obj.room].history.push(json);
-            rooms[obj.room].history = rooms[obj.room].history.slice(-100);
+            rooms[obj.room].history = rooms[obj.room].history.slice(-historySize);
 
             broadcastTo(obj.room, json);
           }
