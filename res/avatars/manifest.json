@@ -1,0 +1,152 @@
+[
+  {
+    "name": "hugh",
+    "images": [
+      "angry",
+      "angry2",
+      "bored",
+      "bored2",
+      "coy",
+      "coy2",
+      "happy",
+      "laugh",
+      "laugh2",
+      "neutral",
+      "sad",
+      "scared",
+      "scared2",
+      "shout"
+    ]
+  },
+  {
+    "name": "lance",
+    "images": [
+      "angry",
+      "angry2",
+      "sad",
+      "scared",
+      "bored",
+      "coy",
+      "shout",
+      "neutral"
+    ]
+  },
+  {
+    "name": "jordan",
+    "images": [
+      "angry",
+      "bored",
+      "coy",
+      "happy",
+      "laugh",
+      "neutral",
+      "sad",
+      "scared",
+      "shout"
+    ]
+  },
+  {
+    "name": "kwensa",
+    "images": [
+      "angry",
+      "angry2",
+      "angry3",
+      "bored",
+      "bored2",
+      "coy",
+      "coy2",
+      "happy",
+      "laugh",
+      "laugh2",
+      "neutral",
+      "sad",
+      "scared",
+      "scared2",
+      "shout"
+    ]
+  },
+  {
+    "name": "sage",
+    "images": [
+      "angry",
+      "angry2",
+      "bored",
+      "bored2",
+      "coy",
+      "coy2",
+      "happy",
+      "happy2",
+      "laugh",
+      "laugh2",
+      "neutral",
+      "sad",
+      "scared",
+      "scared2",
+      "shout"
+    ]
+  },
+  {
+    "name": "tiki",
+    "images": [
+      "angry",
+      "angry2",
+      "angry3",
+      "angry4",
+      "bored",
+      "coy",
+      "coy2",
+      "happy",
+      "happy2",
+      "laugh",
+      "laugh2",
+      "neutral",
+      "sad",
+      "sad2",
+      "scared",
+      "scared2",
+      "shout",
+      "shout2"
+    ]
+  },
+  {
+    "name": "cro",
+    "images": [
+      "angry",
+      "angry2",
+      "angry3",
+      "angry4",
+      "bored",
+      "coy",
+      "coy2",
+      "happy",
+      "happy2",
+      "laugh",
+      "laugh2",
+      "neutral",
+      "scared",
+      "scared2",
+      "scared3",
+      "scared4",
+      "scared5",
+      "shout",
+      "shout2"
+    ]
+  },
+  {
+    "name": "tongtyed",
+    "images": [
+      "angry",
+      "angry2",
+      "angry3",
+      "angry4",
+      "coy",
+      "happy",
+      "happy2",
+      "happy3",
+      "laugh",
+      "neutral",
+      "scared",
+      "shout"
+    ]
+  }
+]

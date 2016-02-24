@@ -1,0 +1,162 @@
+html, body {
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-size: 12px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+p {
+  line-height: 150%;
+}
+
+#content {
+  background: #eee;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 1rem 1rem 6rem 1rem;
+  width: calc(100% - 2rem);
+}
+
+.input-bar {
+  align-items: center;
+  background-color: #C0C0C0;
+  border-top: 0.2rem outset #FFFFFF;
+  bottom: 0;
+  display: flex;
+  height: 5rem;
+  justify-content: center;
+  padding: 0 1rem;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+
+.options {
+  display: flex;
+  flex-grow: 0;
+  justify-content: center;
+  margin: 0 2rem 0 0;
+}
+
+.options div {
+  margin: 0 1rem;
+}
+
+#input {
+  width: calc(100% - 1.6rem);
+}
+
+input[type=text] {
+  border: 2px inset #ccc;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  padding: 0.5rem;
+}
+
+#input-form {
+  flex-grow: 2;
+}
+
+.box {
+  display: flex;
+  overflow: hidden;
+  margin: 0.5rem;
+  padding: 1rem;
+  width: 350px;
+  height: 350px;
+  outline: solid 3px #000;
+  background-image: url('../res/backgrounds/field.gif');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  align-items: center;
+  justify-content: center;
+
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated; /* Chrome */
+  image-rendering: crisp-edges;
+}
+
+.actor {
+  flex: 1; /* required for IE */
+  float: left;
+  height: calc(100% - 1rem);
+  margin: 0.5rem;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.name {
+  font-weight: bold;
+  text-shadow:
+    -1px -1px 0 #FFFFFF,
+     1px -1px 0 #FFFFFF,
+      -1px  1px 0 #FFFFFF,
+     1px  1px 0 #FFFFFF,
+
+      -2px -2px 0 #FFFFFF,
+     2px -2px 0 #FFFFFF,
+      -2px  2px 0 #FFFFFF,
+     2px  2px 0 #FFFFFF;
+}
+
+.avatar {
+  margin: 3rem 0 0 0;
+  max-width: 100%;
+}
+
+.avatar img {
+  width: 100%;
+}
+
+.chat-bubble {
+  background: #FFFFFF;
+  border: #000000 solid 0.3rem;
+  border-radius: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  max-height: 20rem;
+  max-width: 12rem;
+  padding: 0.7rem;
+  position: relative;
+}
+
+.chat-bubble:after {
+  border-color: #FFFFFF transparent;
+  border-style: solid;
+  border-width: 3rem 0.5rem 0;
+  bottom: -2rem;
+  content: '';
+  display: block;
+  left: 50%;
+  margin-left: 0.15rem;
+  position: absolute;
+  width: 0;
+  z-index: 1;
+}
+
+.chat-bubble:before {
+  border-color: #000 transparent;
+  border-style: solid;
+  border-width: 3rem 0.8rem 0;
+  bottom: -3rem;
+  content: '';
+  display: block;
+  left: 50%;
+  margin-left: -0.08rem;
+  position: absolute;
+  width: 0;
+  z-index: 0;
+}
+
+.template {
+  display: none;
+}
+
+.flip-horizontal {
+  -ms-filter: fliph; /*IE*/
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
