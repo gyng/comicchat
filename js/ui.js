@@ -242,14 +242,17 @@ UI.prototype = {
     return actor.getElementsByTagName('div')[0];
   },
 
-  loadCharacterManifest: function () {
+  loadCharacterManifest: function (callback) {
     var request = new XMLHttpRequest();
-    request.open('GET', './res/avatars/manifest.json', false);
+    request.open('GET', './res/avatars/manifest.json', true);
     request.send();
 
     var that = this;
     request.onload = function() {
       that.characters = JSON.parse(this.response);
+      if (typeof callback !== 'undefined') {
+        callback();
+      }
     };
   },
 

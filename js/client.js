@@ -94,7 +94,8 @@
   }
 
   var retryHandlerID = null;
-  ui.loadCharacterManifest();
-  var connection = makeConnection(new WebSocket(serverAddress));
-  ui.setConnection(connection);
+  ui.loadCharacterManifest(function () {
+    var connection = makeConnection(new WebSocket(serverAddress));
+    ui.setConnection(connection);
+  });
 })();
