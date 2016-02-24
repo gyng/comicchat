@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var serverAddress = 'ws://sugoi.pw:8084';
+  var serverAddress = 'ws://localhost:8084';
 
   var ui = new UI({
     content:          document.getElementById('content'),
