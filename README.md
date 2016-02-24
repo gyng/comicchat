@@ -11,7 +11,7 @@ Based off Microsoft Comic Chat. Uses node.js and websockets.
 * Comic chat
 * Rooms
 * Notifications
-* Google Translate text-to-speech abuse (Chrome only right now)
+* Text-to-speech via Web Speech API
 * Basic relay support for animating your (IRC) chat
 
 ## Usage
