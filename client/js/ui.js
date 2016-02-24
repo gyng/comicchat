@@ -19,6 +19,13 @@ function UI (elements) {
 
   this.input.value = ''; // Clear on init
 
+  this.synth = window.speechSynthesis;
+  if (typeof this.synth === 'undefined') {
+    this.ttsEnabled.disabled = true;
+  } else {
+    this.synth.speak(new SpeechSynthesisUtterance('')); // Initialize voices
+  }
+
   this.setupShortcuts();
   this.setupNotifications();
   this.loadCharacterManifest();
@@ -77,38 +84,48 @@ UI.prototype = {
     }
   },
 
+  getVoicesFor: function (voices, lang) {
+    var result = [];
+    for (var i = 0; i < voices.length; i++) {
+      if (voices[i].lang === lang) {
+        result.push(voices[i]);
+      }
+    }
+
+    return result;
+  },
+
   tts: function (data) {
-    if (this.ttsEnabled.checked === true) {
-      // Bad languages for English: el, ar, zh-CN, zh-TW, th,
-      // Removed similar sounding, robotic: af, sq, ro, sr, sw, vi, cy, ca, hr
-      // Left eo for robot voice
-      var languages = [
-        'en', 'en-US', 'en-UK', 'en-CA', 'en-AU', 'en-NZ',
-        'hy', 'cs', 'nl', 'eo', 'fi', 'fr', 'de', 'ht',
-        'hi', 'da', 'hu', 'is', 'id', 'it', 'ja', 'ko',
-        'la', 'lv', 'mk', 'no', 'pl', 'pt', 'ru', 'sk',
-        'es', 'sv', 'ta', 'vi'
-      ];
+    if (this.ttsEnabled.checked === true && typeof this.synth !== 'undefined') {
+      var utterable = new SpeechSynthesisUtterance(data.text);
+      var voices = this.synth.getVoices();
+      var hashCode = this.getHashCode(data.author);
 
-      // Pick 'random' language 'voice'
-      var language = languages[Math.floor(this.getHashCode(data.author)) % languages.length];
+      var languageVoices = {
+        'ja-JP': this.getVoicesFor(voices, 'ja-JP'),
+        'ko-KR': this.getVoicesFor(voices, 'ko-KR'),
+        'zh-CN': this.getVoicesFor(voices, 'zh-CN')
+      };
 
-      // Basic language guessing (CJK now).
-      // Override if language detected.
-      // Only works for languages with different character sets.
-      // Calling Google's detect language API needs JSONP (I think), which
-      // is too much trouble now. Exceptions are here.
       if (data.text.match(/[\u3040-\u309F\u30A0-\u30FF]/g)) {
-        language = 'ja';
+        utterable.lang = 'ja-JP';
       } else if (data.text.match(/[\u1100-\u11FF\u3130-\u318F\uAC00-\uD7AF]/g)) {
-        language = 'ko';
+        utterable.lang = 'ko-KR';
       } else if (data.text.match(/[\u4E00-\u9FFF]/g)) {
-        language = 'zh-CN';
+        utterable.lang = 'zh-CN';
       }
 
-      var google_tts = "http://translate.google.com/translate_tts?ie=utf-8&q=" + data.text + '&tl=' + language;
-      var sound = new Audio(google_tts);
-      sound.play();
+      if (utterable.lang !== '') {
+        var langVoices = languageVoices[utterable.lang];
+        utterable.voice = langVoices[Math.floor(hashCode) % langVoices.length] || null;
+      }
+
+      // Assign random (hashed) voice if not a special language or no voice available for that language
+      if (utterable.voice === '' || utterable.voice === null) {
+        utterable.voice = voices[Math.floor(hashCode) % voices.length];
+      }
+
+      this.synth.speak(utterable);
     }
   },
 
