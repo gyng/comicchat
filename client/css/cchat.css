@@ -4,7 +4,7 @@ html, body {
     width: 100%;
     height: 100%;
     font-size: 12px;
-    font-family: "Comic Sans MS";
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
 
 p {
@@ -52,7 +52,7 @@ p {
 input[type=text] {
     border: 2px inset #ccc;
     padding: 0.5rem;
-    font-family: 'Comic Sans MS';
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
 
 #input-form {
