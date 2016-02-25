@@ -4,6 +4,7 @@
   "description": "a web version of comicchat",
   "main": "server/server.js",
   "scripts": {
+    "start": "node server/server.js",
     "deploy": "gh-pages -d client"
   },
   "dependencies": {
