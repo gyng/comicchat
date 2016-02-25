@@ -221,7 +221,7 @@ UI.prototype = {
 
     var character = characters[this.getHashCode(message.author) % characters.length];
     var avatar = document.createElement('img');
-    var avatarImageIndex = this.getHashCode(message.text + ' ' + message.author + ' ' + this.currentBoxes) % character.images.length;
+    var avatarImageIndex = this.getHashCode(message.text + ' ' + message.author + ' ' + message.time) % character.images.length;
     avatar.src = './res/avatars/' + character.name + '/' + character.images[avatarImageIndex] + '.png';
 
     // Make characters face each other
@@ -242,9 +242,9 @@ UI.prototype = {
     return actor.getElementsByTagName('div')[0];
   },
 
-  loadCharacterManifest: function (isAsync) {
+  loadCharacterManifest: function (callback) {
     var request = new XMLHttpRequest();
-    request.open('GET', './res/avatars/manifest.json', isAsync);
+    request.open('GET', './res/avatars/manifest.json');
     request.send();
 
     var that = this;
