@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var serverAddress = 'ws://home.sugoi.pw:8084';
+  var serverAddress = 'ws://localhost:8084';
 
   var ui = new UI({
     content:          document.getElementById('content'),
@@ -95,6 +95,8 @@
 
   var retryHandlerID = null;
   ui.loadCharacterManifest(function () {
+    // HACK: ideally it shouldn't matter if characters aren't loaded yet
+    //       The UI should rerender when it loads characters.
     var connection = makeConnection(new WebSocket(serverAddress));
     ui.setConnection(connection);
   });

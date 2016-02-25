@@ -28,7 +28,7 @@ function UI (elements) {
 
   this.setupShortcuts();
   this.setupNotifications();
-  this.loadCharacterManifest();
+  // this.loadCharacterManifest(); // Character manifest loaded by client first
 }
 
 UI.prototype = {
@@ -221,7 +221,7 @@ UI.prototype = {
 
     var character = characters[this.getHashCode(message.author) % characters.length];
     var avatar = document.createElement('img');
-    var avatarImageIndex = this.getHashCode(message.text + ' ' + message.author + ' ' + this.currentBoxes) % character.images.length;
+    var avatarImageIndex = this.getHashCode(message.text + ' ' + message.author + ' ' + message.time) % character.images.length;
     avatar.src = './res/avatars/' + character.name + '/' + character.images[avatarImageIndex] + '.png';
 
     // Make characters face each other
@@ -237,6 +237,7 @@ UI.prototype = {
     actor.innerHTML = actorTemplate;
     actor.querySelector('.text').appendChild(document.createTextNode(message.text));
     actor.querySelector('.name').appendChild(document.createTextNode(message.author));
+    actor.querySelector('.name').title = (new Date(message.time)).toLocaleString(undefined, { timeZoneName: 'short' });
     actor.querySelector('.avatar').appendChild(avatar);
 
     return actor.getElementsByTagName('div')[0];
@@ -244,7 +245,7 @@ UI.prototype = {
 
   loadCharacterManifest: function (callback) {
     var request = new XMLHttpRequest();
-    request.open('GET', './res/avatars/manifest.json', true);
+    request.open('GET', './res/avatars/manifest.json');
     request.send();
 
     var that = this;
