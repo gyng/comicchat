@@ -38,11 +38,12 @@ p {
   display: flex;
   flex-grow: 0;
   justify-content: center;
-  margin: 0 2rem 0 0;
+  align-items: center;
+  margin: 0 2rem 0 1rem;
 }
 
-.options div {
-  margin: 0 1rem;
+.options div, .options input, .options a {
+  margin: 0 0.5rem 0 1rem;
 }
 
 #input {
