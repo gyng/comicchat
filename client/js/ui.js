@@ -237,6 +237,7 @@ UI.prototype = {
     actor.innerHTML = actorTemplate;
     actor.querySelector('.text').appendChild(document.createTextNode(message.text));
     actor.querySelector('.name').appendChild(document.createTextNode(message.author));
+    actor.querySelector('.name').title = (new Date(message.time)).toLocaleString(undefined, { timeZoneName: 'short' });
     actor.querySelector('.avatar').appendChild(avatar);
 
     return actor.getElementsByTagName('div')[0];
