@@ -1,0 +1,8 @@
+[package]
+name = "rust"
+version = "0.1.0"
+authors = ["Ng Guoyou <ng.guoyou@gmail.com>"]
+
+[dependencies]
+websocket = "0.15.2"
+rustc-serialize = "0.3.18"
