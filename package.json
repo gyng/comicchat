@@ -5,9 +5,11 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
+    "client": "http-server client -g",
     "deploy": "gh-pages -d client"
   },
   "dependencies": {
+    "http-server": "^0.11.1",
     "websocket": "~1.0.22"
   },
   "devDependencies": {

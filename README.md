@@ -2,7 +2,7 @@
 
 # comicchat
 
-Based off Microsoft Comic Chat. Uses node.js and websockets.
+Quick and dirty. Based off Microsoft Comic Chat. Uses node.js and websockets.
 
 ![Screenshot](http://i.imgur.com/J1k7iwn.png)
 
@@ -17,8 +17,8 @@ Based off Microsoft Comic Chat. Uses node.js and websockets.
 ## Usage
 
 0. Clone repo.
-1. `npm install`
-2. Change address of server in `client/js/client.js`
+1. `npm install` or `yarn install`
+2. Change address of server in `client/js/client.js`, or supply it via a query param `http://example.com?server=ws://localhost:8084`
 3. Change port of server in `server/server.js`
 4. `node server/server.js` or `npm start`
 5. Visit `client/index.html`
