@@ -2,6 +2,8 @@
 
 process.title = 'comicchat-server';
 
+var args = require('minimist')(process.argv.slice(2));
+
 // Basic global logger -- replace with library
 function log (text) {
   console.log((new Date()) + ' ' + text);
@@ -10,10 +12,15 @@ function log (text) {
 var http = require('http');
 var websocketServer = require('websocket').server;
 
-var wsServerPort = 8084;
-var historySize = 500;
+var wsServerPort = args.port || 8084;
+var historySize = args.historySize || 500;
 var clients = [];
 var rooms = {};
+
+console.log("Config:", {
+  wsServerPort: wsServerPort,
+  historySize: historySize
+});
 
 // Dummy HTML server for websocket server to hook into
 var httpServer = http.createServer(function () {});

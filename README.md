@@ -20,7 +20,7 @@ Quick and dirty. Based off Microsoft Comic Chat. Uses node.js and websockets.
 1. `npm install` or `yarn install`
 2. Change address of server in `client/js/client.js`, or supply it via a query param `http://example.com?server=ws://localhost:8084`
 3. Change port of server in `server/server.js`
-4. `node server/server.js` or `npm start`
+4. `node server/server.js` or `npm start`, args `--port 8084` (default), `--historySize 500` (default)
 5. Visit `client/index.html`
 
 ## Deploy
