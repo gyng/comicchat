@@ -9,7 +9,7 @@ EXPOSE 8080 8084
 
 COPY ./ ./
 
-ARG WS_URL=localhost:8084
+ARG WS_URL=ws://localhost:8084
 RUN sed -i "s|ws://localhost:8084|${WS_URL}|" client/js/client.js
 
 ENTRYPOINT ["yarn"]
