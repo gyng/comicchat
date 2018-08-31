@@ -1,0 +1,12 @@
+version: "2.4"
+services:
+  server:
+    build: .
+    command: ["start"]
+    ports:
+      - 8084:8084
+  client:
+    build: .
+    command: ["client"]
+    ports:
+      - 8080:8080
