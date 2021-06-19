@@ -100,5 +100,6 @@
     //       The UI should rerender when it loads characters.
     var connection = makeConnection(new WebSocket(serverAddress));
     ui.setConnection(connection);
+    ui.loadBackgroundManifest(function() {});
   });
 })();
