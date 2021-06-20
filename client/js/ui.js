@@ -10,6 +10,7 @@ function UI (elements) {
 
   this.connection   = null;
   this.notification = null;
+  this.backgrounds = [];
 
   this.maxActorsPerBox = 2;
   this.currentBoxActors = 0;
@@ -208,11 +209,20 @@ UI.prototype = {
   },
 
   makeBox: function () {
-    var boxTemplate = document.getElementById('box-template').innerHTML;
-    var box = document.createElement('div');
-    box.innerHTML = boxTemplate;
+      var boxTemplate = document.getElementById('box-template').innerHTML;
+      var box = document.createElement('div');
+      var name = this.makeBackground();
+      var url = "url('" + name +  "')"
+      box.innerHTML = boxTemplate;
+      box.getElementsByTagName('div')[0].style["background-image"] = url;
+      return box.getElementsByTagName('div')[0];
+  },
 
-    return box.getElementsByTagName('div')[0];
+  makeBackground: function() {
+      if(this.backgrounds && this.backgrounds.length) {
+	  var bgix = Math.floor( this.backgrounds.length * Math.random( ));
+	  return "./res/backgrounds/" + this.backgrounds[ bgix ] + ".gif";
+      }
   },
 
   makeActor: function (message, flip) {
@@ -241,6 +251,20 @@ UI.prototype = {
     actor.querySelector('.avatar').appendChild(avatar);
 
     return actor.getElementsByTagName('div')[0];
+  },
+
+  loadBackgroundManifest: function (callback) {
+    var request = new XMLHttpRequest();
+    request.open('GET', './res/backgrounds/manifest.json');
+    request.send();
+
+    var that = this;
+    request.onload = function() {
+      that.backgrounds = JSON.parse(this.response);
+      if (typeof callback !== 'undefined') {
+        callback();
+      }
+    };
   },
 
   loadCharacterManifest: function (callback) {
