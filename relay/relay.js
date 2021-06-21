@@ -10,6 +10,8 @@ var net = require('net');
 var tls = require('tls');
 var WebSocketClient = require('websocket').client;
 
+
+
 var config = {
   cchat: {
     nick: 'ircrelay',
@@ -22,7 +24,7 @@ var config = {
     nick: 'comicrelay',
     user: 'comic',
     real: 'relay',
-    channel: '#',
+    channels: [ '#' ],
     host: '',
     port: 6697,
     ssl: true
@@ -59,7 +61,7 @@ function makeComicChat () {
       [
         { type: 'join',    room: config.cchat.room },
         { type: 'message', room: config.cchat.room, text: config.cchat.nick },
-        { type: 'message', room: config.cchat.room, text: 'Hello everyone! ' + config.irc.host + ' ' + config.irc.channel +' messenger here.' }
+        { type: 'message', room: config.cchat.room, text: 'Hello everyone! ' + config.irc.host + ' ' + config.irc.channels[0] +' messenger here.' }
       ].forEach(function (message) {
         connection.sendUTF(JSON.stringify(message));
       });
@@ -105,8 +107,10 @@ function makeIRC() {
     });
 
     irc.on(/^.+ 001 .+$/i, function () {
-      irc.raw('JOIN ' + config.irc.channel);
-      irc.raw('PRIVMSG ' + config.irc.channel + ' Relaying to: ' + config.cchat.roomLink);
+      config.irc.channels.forEach(function(channel) {
+	irc.raw('JOIN ' + channel);
+	irc.raw('PRIVMSG ' + channel + ' Relaying to: ' + config.cchat.roomLink);
+      });
     });
 
     irc.on(/^:(.+)!.+@.+ PRIVMSG .+? :(.+)$/i, function (info) {

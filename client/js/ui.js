@@ -192,7 +192,7 @@ UI.prototype = {
       this.previousAuthor === message.author;
 
     if (newBox === true) {
-      this.currentBox = this.makeBox();
+      this.currentBox = this.makeBox(message);
       this.content.appendChild(this.currentBox);
       if (typeof stickBottom === 'undefined' || stickBottom === true) {
         window.scrollTo(0, document.body.scrollHeight);
@@ -208,19 +208,19 @@ UI.prototype = {
     this.previousAuthor = message.author;
   },
 
-  makeBox: function () {
+  makeBox: function (message) {
       var boxTemplate = document.getElementById('box-template').innerHTML;
       var box = document.createElement('div');
-      var name = this.makeBackground();
+      var name = this.makeBackground(message);
       var url = "url('" + name +  "')"
       box.innerHTML = boxTemplate;
       box.getElementsByTagName('div')[0].style["background-image"] = url;
       return box.getElementsByTagName('div')[0];
   },
 
-  makeBackground: function() {
+  makeBackground: function(message) {
       if(this.backgrounds && this.backgrounds.length) {
-	  var bgix = Math.floor( this.backgrounds.length * Math.random( ));
+	  var bgix = this.getHashCode(message.text + ' ' + message.author + ' ' + message.time) % this.backgrounds.length;
 	  return "./res/backgrounds/" + this.backgrounds[ bgix ] + ".gif";
       }
   },
